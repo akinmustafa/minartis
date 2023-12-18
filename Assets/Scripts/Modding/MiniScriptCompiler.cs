@@ -32,7 +32,7 @@ public class MiniScriptCompiler : MonoBehaviour
         {
             interpreter.RunUntilDone();
         }
-        catch(MiniscriptException err)
+        catch (MiniscriptException err)
         {
             Debug.Log("MiniScript Exception: " + err);
         }
