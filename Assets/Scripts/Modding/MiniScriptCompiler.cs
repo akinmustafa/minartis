@@ -6,14 +6,25 @@ using Miniscript;
 public class MiniScriptCompiler : MonoBehaviour
 {
     public Interpreter interpreter;
+    static bool intrinsicsAdded = false; 
     public TextAsset script;
 
     void Awake() {
+        AddIntrinsics();
         interpreter = new Interpreter();
     }
 
     void AddIntrinsics() {
-        // Empty for future intrinsics.
+        if (intrinsicsAdded) return;
+        intrinsicsAdded = true;
+
+        Intrinsic f;
+        f = Intrinsic.Create("RandomMove");
+        f.code = (context, partialResult) =>
+        {
+            transform.position = new Vector3(Random.Range(19, 24), 0, Random.Range(22, 24));
+            return new Intrinsic.Result(1);
+        };
     }
 
     [ContextMenu("Compile")]
@@ -39,6 +50,9 @@ public class MiniScriptCompiler : MonoBehaviour
     }
 
     private void Update() {
+        if (Input.GetKeyDown(KeyCode.E))
+            Compile();
+
         if (interpreter == null || !interpreter.Running())
             return;
         try

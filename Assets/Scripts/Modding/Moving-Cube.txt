@@ -1,0 +1,5 @@
+while true
+    RandomMove()
+    wait(0.25)
+    yield
+end while
